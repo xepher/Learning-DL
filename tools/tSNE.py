@@ -22,10 +22,11 @@ def read_data(file):
     print(data.head())
     print(np.unique(data["Usage"].values.ravel()))
     print ( 'The number of data set is %d' %(len(data)))
-    pixels_values = data.pixels.str.split(" ").tolist()
-    pixels_values = pd.DataFrame(pixels_values, dtype=int)
-    images = pixels_values.values
-    images = images.astype(np.float)
+    # pixels_values = data.pixels.str.split(" ").tolist()
+    # pixels_values = pd.DataFrame(pixels_values, dtype=int)
+    # images = pixels_values.values
+    # images = images.astype(np.float)
+    images = np.array([np.fromstring(x, dtype=float, sep=' ') for x in data.pixels])
     print(images)
 
     # show one image
@@ -93,7 +94,7 @@ if __name__ == '__main__':
 
     images, labels = read_data(file)
 
-    fname = '/Users/yangliu/code/deep_learning/tools/data.pkl'
+    fname = os.path.join(os.path.dirname(__file__), 'data.pkl')
     if os.path.isfile(fname):
         with open(fname, 'rb') as input:
             X_tsne = pickle.load(input)
